@@ -32,7 +32,7 @@ class NAL(AL):
         return not r
 
 
-class Node(object):
+class Has(object):
     def __init__(self, id=None, attr=None, value=None):
         self.id = id
         self.attr = attr
@@ -46,6 +46,14 @@ class Node(object):
         left = getattr(id, self.attr.value)
         right = ctx.get(self, self.value.value)
         return left == right
+
+
+class Nega(Has):
+    def __str__(self):
+        return '%s.%s != %s' % (self.id, self.attr, self.value)
+
+    def get_result(self, ctx):
+        return not super(Nega, self).get_result(ctx)
 
 
 class Token(object):
@@ -116,7 +124,7 @@ def scan(code):
         s.c = c
         s.cn += 1
 
-        if c == ' ':
+        if c in {' ', ','}:
             if s.bf:
                 yield build_token()
                 s.idx += 1
@@ -128,7 +136,7 @@ def scan(code):
             s.pc = c
             continue
         elif c in {'(', ')', '-', '{', '}'}:
-            if c == '-' and nc != '{':
+            if c == '-' and nc not in {'{', '('}:
                 raise_exception()
 
             if s.bf:
@@ -159,7 +167,10 @@ def parse(tokens):
     for t in tokens:
         s.t = t
         if t == '(':
-            s.cn = Node()
+            if s.pt == '-':
+                s.cn = Nega()
+            else:
+                s.cn = Has()
             s.cl.append(s.cn)
         elif t == '{':
             if s.pt == '-':
