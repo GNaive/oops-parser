@@ -68,7 +68,7 @@ class Value(Token):
     pass
 
 
-def parse(code):
+def tokenize(code):
     return list(scan(code))
 
 
@@ -137,7 +137,7 @@ def scan(code):
         s.pc = c
 
 
-def get_ast(tokens):
+def parse(tokens):
     if not tokens:
         return
 
@@ -189,8 +189,8 @@ if __name__ == '__main__':
   ($z on $w)
   -{($z color red)
     ($z on $y)}}'''
-    tokens = parse(code)
-    ast = get_ast(tokens)
+    tokens = tokenize(code)
+    ast = parse(tokens)
     print ' '.join(map(str, tokens))
     print ast
     print execute_ast(ast, {
