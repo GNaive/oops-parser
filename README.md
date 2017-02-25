@@ -1,7 +1,7 @@
 oops-parser
 ============
 
-[![Build Status](https://api.travis-ci.org/yetone/oops-parser.svg?branch=master)](https://travis-ci.org/yetone/oops-parser)
+[![Build Status](https://api.travis-ci.org/GNaive/oops-parser.svg?branch=master)](https://travis-ci.org/GNaive/oops-parser)
 
 Oops parser! 🌊
 
