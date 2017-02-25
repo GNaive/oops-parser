@@ -16,3 +16,13 @@ def test_parse():
     tokens = tokenize(code)
     ast = parse(tokens)
     assert '$x.on == $y AND $y.left_of == $z AND NOT ($z.color == red AND $z.on == $w AND NOT ($z.color == red AND $z.on == $y))' == str(ast)  # noqa
+
+
+def test_nega():
+    code = '''
+($x on table)
+-($x color red)
+'''
+    tokens = tokenize(code)
+    ast = parse(tokens)
+    assert '$x.on == table AND $x.color != red' == str(ast)
