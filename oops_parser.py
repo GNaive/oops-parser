@@ -1,3 +1,10 @@
+import sys
+
+
+if sys.version_info >= (3, 0):
+    xrange = range
+
+
 class State(object):
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
@@ -191,12 +198,12 @@ if __name__ == '__main__':
     ($z on $y)}}'''
     tokens = tokenize(code)
     ast = parse(tokens)
-    print ' '.join(map(str, tokens))
-    print ast
-    print execute_ast(ast, {
+    print(' '.join(map(str, tokens)))
+    print(ast)
+    print(execute_ast(ast, {
         '$x': Var(on=1),
         '$y': Var(left_on=1),
         '$z': Var(color=1, on=1),
         '$w': Var(),
         'red': 1
-    })
+    }))
